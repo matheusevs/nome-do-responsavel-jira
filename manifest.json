@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "Jira Branch Assignee Prefix",
+  "version": "1.0.0",
+  "description": "Adiciona o primeiro nome do responsavel do card ao comando de branch do Jira.",
+  "permissions": ["clipboardWrite"],
+  "host_permissions": ["https://*.atlassian.net/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://*.atlassian.net/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
