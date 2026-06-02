@@ -2,7 +2,6 @@
   const COMMAND_RE = /git\s+checkout\s+-b\s+["']?[^\s"']+/i;
   const BRANCH_RE = /(git\s+checkout\s+-b\s+)(["']?)([^\s"']+)/i;
   const ISSUE_RE = /^[A-Z][A-Z0-9]+-\d+$/;
-  const seenButtons = new WeakSet();
   const cache = new Map();
   let scheduled = false;
 
@@ -63,46 +62,6 @@
   const isCommandElement = (element) =>
     "value" in element || element.matches("pre, code") || element.children.length === 0;
 
-  const addCopyButton = (element, prefix) => {
-    const parent = element.parentElement;
-    if (!parent || seenButtons.has(parent) || parent.querySelector("[data-jira-assignee-copy]")) return;
-
-    const button = document.createElement("button");
-    button.type = "button";
-    button.textContent = "Copiar +";
-    button.dataset.jiraAssigneeCopy = "1";
-    button.title = "Copia o comando com o primeiro nome do responsavel do card";
-    button.style.cssText = [
-      "margin-top:0",
-      "margin-left:8px",
-      "padding:0 10px",
-      "height:32px",
-      "min-width:72px",
-      "border:1px solid #579dff",
-      "border-radius:3px",
-      "background:#1d7afc",
-      "color:#fff",
-      "display:inline-flex",
-      "align-items:center",
-      "justify-content:center",
-      "align-self:center",
-      "font:600 12px/1 sans-serif",
-      "cursor:pointer"
-    ].join(";");
-
-    button.addEventListener("click", async () => {
-      const command = prefixCommand(commandFromElement(element), prefix);
-      await navigator.clipboard.writeText(command);
-      button.textContent = "Copiado";
-      setTimeout(() => {
-        button.textContent = "Copiar +";
-      }, 1200);
-    });
-
-    parent.appendChild(button);
-    seenButtons.add(parent);
-  };
-
   const applyPrefix = (prefix) => {
     const candidates = document.querySelectorAll("input, textarea, pre, code, span, div");
 
@@ -115,8 +74,6 @@
         if ("value" in element) setInputValue(element, next);
         else element.textContent = next;
       }
-
-      addCopyButton(element, prefix);
     }
   };
 

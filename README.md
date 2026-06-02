@@ -22,8 +22,6 @@ git checkout -b matheus-DEV-3412-bug-omni...
 4. Selecione esta pasta: `jira-branch-assignee-prefix`.
 5. Recarregue a pagina do Jira.
 
-Se o botao nativo do Jira copiar o comando antigo, use o botao `Copiar com responsavel` que a extensao adiciona perto do comando.
-
 ## Observacoes
 
 - Funciona em `*.atlassian.net`.
